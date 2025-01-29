@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block 'titulo' %}
-   Conceder Permissão
+   Listar Documentos
 {% endblock %}
 {% block 'menu' %}
 {% include 'menu.html' %}
@@ -40,8 +40,9 @@
         </tr>
         {% endfor %}
     </tbody>
-</table>
 
+</table>
+{% if documentos_compartilhados.items %}
 <h1>Documentos Compartilhados Comigo</h1>
 {% for usuario, documentos in documentos_compartilhados.items %}
     <div style="margin-bottom: 20px;">
@@ -65,7 +66,9 @@
                 </tr>
                 {% endfor %}
             </tbody>
-        </table>
+    </table>
+    
     </div>
 {% endfor %}
+{% endif %}
 {% endblock %}
