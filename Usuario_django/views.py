@@ -73,7 +73,7 @@ def cadastro(request):
             usuario=Usuario(usuario=user,cpf=cpf,tipo=tipo)
             usuario.save()
         else:
-            print("Usuario ja existe")
+            messages.error(request, 'Usuário já existe')
         return render(request,"login.html")
     else:
         return render(request,"login.html")
