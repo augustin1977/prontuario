@@ -58,9 +58,12 @@ def cadastro(request):
                  return render(request, "cadastro.html", {
                     "tipos": [],'is_admin_user':is_admin_user,
                     "erro": "CPF inválido. Por favor, insira um CPF válido."})
-                
-        if request.POST.get("tipo") and request.user.usuario.tipo == Tipo_usuario.objects.get(tipo="admin"):
-            tipoform=request.POST.get("tipo")
+        try :
+            tipopost=request.user.usuario.tipo  
+        except:
+            tipopost=False      
+        if request.POST.get("tipo") and tipopost==Tipo_usuario.objects.get(tipo="admin"):
+            tipoform=request.POST.get("tipo")  
         else:
             tipoform="user" 
         if not (User.objects.filter(username=cpf)) :
