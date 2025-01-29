@@ -1,0 +1,129 @@
+/* Adiciona padding no body para garantir que o conteúdo não vá para fora da tela */
+body {
+    padding-top: 40px; /* Altura da navbar fixa */
+    margin: 0;
+    overflow-x: hidden; /* Evita rolagem horizontal indesejada */
+}
+
+/* Ajusta o comportamento da navbar para dispositivos móveis */
+.navbar {
+    padding: 0.5rem 1rem;
+    flex-wrap: wrap;
+}
+
+.navbar-nav .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+/* Ajusta a imagem do item para caber na tela */
+.item-image {
+    width: 100%; /* Faz a imagem ocupar a largura disponível */
+    max-width: 200px; /* Define um tamanho máximo para a imagem */
+    height: auto; /* Mantém a proporção da imagem */
+    object-fit: contain;
+}
+
+
+/* Ajusta a tabela para dispositivos móveis */
+.table-responsive {
+    overflow-x: auto; /* Permite rolagem horizontal se necessário */
+    -webkit-overflow-scrolling: touch; /* Melhora a rolagem em dispositivos touch */
+    max-height: 100vh; /* Limita a altura máxima da tabela à altura da tela */
+    overflow-y: auto; /* Permite rolagem vertical se a tabela for muito alta */
+}
+
+/* Ajustes específicos para dispositivos móveis */
+@media (max-width: 768px) {
+    .watermark {
+        height: 40%; /* Ajuste a altura da marca d'água em dispositivos móveis */
+        background-size: 100% auto; /* Ajusta o tamanho da imagem para manter a proporção */
+    }
+    .navbar-nav {
+        flex-direction: column;
+    }
+    .navbar {
+        padding-top: 15px;
+    }
+    .container {
+        padding-top: 20px;
+    }
+    .input-group {
+        flex-direction: column;
+    }
+    .input-group .form-control, .input-group .input-group-append {
+        width: 100%;
+    }
+    .input-group .input-group-append {
+        margin-top: 10px;
+    }
+    .fixed-header th {
+        font-size: 14px;
+    }
+    .scrollable-table-responsive {
+        max-height: 50vh;
+        overflow-y: auto;
+    }
+}
+.red {
+    color: red;
+    font-weight: bold;
+}
+
+.green {
+    color: rgb(100, 200, 80);
+    font-weight: bold;
+}
+@media (max-width: 530px) {
+    body {
+        padding-top: 100px; /* Ajusta o padding para dispositivos móveis */
+    }
+
+    .container {
+        padding-top: 10px;
+    }
+}
+@media (max-width: 380px) {
+    body {
+        padding-top: 150px; /* Ajusta o padding para dispositivos móveis */
+    }
+    .container {
+        padding-top: 10px;
+    }
+}
+/*
+.watermark {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    background-image: url("img_medium.jpg");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.1;
+    z-index: -1;  
+}*/
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+tr:hover {
+    background-color: #f9f9f9; /* Destaca a linha ao passar o mouse */
+}
+
+

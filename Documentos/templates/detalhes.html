@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block 'titulo' %}
+   Detalhes Documento
+{% endblock %}
+{% block 'menu' %}
+{% include 'menu.html' %}
+{% endblock %}
+{% block 'conteudo' %} 
+    <h1>{{ documento.titulo }}</h1>
+
+    <p><strong>Resumo:</strong> {{ documento.resumo }}</p>
+    <p><strong>Data do Documento:</strong> {{ documento.data_documento|date:"d/m/Y" }}</p>
+    <p><strong>Data de Criação:</strong> {{ documento.data_criacao|date:"d/m/Y H:i" }}</p>
+    <p><strong>Última Modificação:</strong> {{ documento.data_modificacao|date:"d/m/Y H:i" }}</p>
+
+    {% if documento.arquivo %}
+        <p><strong>Arquivo:</strong> <a href="{% url 'servir_arquivo_protegido' documento.id %}">Baixar Arquivo</a></p>
+    {% else %}
+        <p><strong>Arquivo:</strong> Nenhum arquivo anexado.</p>
+    {% endif %}
+    <p><strong>Arquivo privado?:</strong> {{ documento.secreto }}</p>
+        </form>
+    <a href="{% url 'listar_documentos' %}">Voltar</a>
+
+    {% endblock %}

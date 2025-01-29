@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block 'titulo' %}
+   Cadastrar Novo Documento
+{% endblock %}
+{% block 'menu' %}
+{% include 'menu.html' %}
+{% endblock %}
+{% block 'conteudo' %} 
+    <h1>Cadastrar Novo Documento</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div>
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" required>
+        </div>
+
+        <div>
+            <label for="resumo">Resumo:</label>
+            <textarea id="resumo" name="resumo" rows="4"></textarea>
+        </div>
+
+        <div>
+            <label for="data_documento">Data do Documento:</label>
+            <input type="date" id="data_documento" name="data_documento" required>
+        </div>
+
+        <div>
+            <label for="arquivo">Arquivo:</label>
+            <input type="file" id="arquivo" name="arquivo">
+        </div>
+        <div>
+            <label for="secreto">Arquivo privado?:</label>
+            <input type="checkbox" id="secreto" name="secreto">
+        </div>
+
+        <div>
+            <button type="submit">Criar Documento</button>
+        </div>
+    </form>
+    {% endblock %}

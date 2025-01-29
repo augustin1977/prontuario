@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block 'titulo' %}
+   Conceder Permissão
+{% endblock %}
+{% block 'menu' %}
+{% include 'menu.html' %}
+{% endblock %}
+{% block 'conteudo' %} 
+
+<h1>Meus Documentos</h1>
+<table style="width: 100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th style="text-align: left; padding: 8px;">Título</th>
+            <th style="text-align: left; padding: 8px;">Privacidade</th>
+            <th style="text-align: left; padding: 8px;">Data do Documento</th>
+            <th style="text-align: left; padding: 8px;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for documento in documentos_proprios %}
+        <tr>
+            <td style="padding: 8px;">
+                <a href="{% url 'detalhes_documento' documento.id %}"><strong>{{ documento.titulo }}</strong></a>
+            </td>
+            <td style="padding: 8px;">
+                {% if documento.secreto %}
+                <span class="red">Privado</span>
+                {% else %}
+                <span class="green">Público</span>
+                {% endif %}
+            </td>
+            <td style="padding: 8px;">
+                {{ documento.data_documento }}
+            </td>
+            <td style="padding: 8px;">
+                <a href="{% url 'editar_documento' documento.id %}">Editar</a> |
+                <a href="{% url 'excluir_documento' documento.id %}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h1>Documentos Compartilhados Comigo</h1>
+{% for usuario, documentos in documentos_compartilhados.items %}
+    <div style="margin-bottom: 20px;">
+        <h3>Proprietário - {{ usuario.first_name }} {{ usuario.last_name }}</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th style="text-align: left; padding: 8px;">Título</th>
+                    <th style="text-align: left; padding: 8px;">Data do Documento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for documento in documentos %}
+                <tr>
+                    <td style="padding: 8px;">
+                        <a href="{% url 'detalhes_documento' documento.id %}"><strong>{{ documento.titulo }}</strong></a>
+                    </td>
+                    <td style="padding: 8px;">
+                        {{ documento.data_documento }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endfor %}
+{% endblock %}

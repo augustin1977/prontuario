@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block 'titulo' %}
+   Conceder Permissão
+{% endblock %}
+{% block 'menu' %}
+{% include 'menu.html' %}
+{% endblock %}
+{% block 'conteudo' %} 
+    <h1>Permissões Concedidas</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <table>
+        <thead>
+            <tr>
+                <th> CPF</th>
+                <th>Usuário Permitido</th>
+                <th>Data de Concessão</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for permissao in permissoes_concedidas %}
+                <tr>
+                    <td>{{ permissao.usuario_permitido.cpf }}</td>
+                    <td>{{ permissao.usuario_permitido.usuario.first_name }} {{ permissao.usuario_permitido.usuario.last_name }}</td>
+                    <td>{{ permissao.data_concessao|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <form method="post" action="{% url 'excluir_permissao' permissao.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit">Revogar Permissão</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">Nenhuma permissão concedida.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'listar_documentos' %}">Voltar</a>
+{% endblock%}

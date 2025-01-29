@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block 'titulo' %}
+   Cadastro de Usuários
+{% endblock %}
+{% block 'menu' %}
+{% include 'menu.html' %}
+{% endblock %}
+{% block 'conteudo' %} 
+
+<!-- Exibe mensagens de erro -->
+{% if erro %}
+    <div style="color: red;">{{ erro }}</div>
+{% endif %}
+
+<h2>Cadastro de Usuário</h2>
+<form action="{% url 'cadastro' %}" method="POST"> 
+    {% csrf_token %}
+    <input type='text' placeholder="CPF" name="cpf" required>
+    <br>
+    <input type='email' placeholder="Email" name="email" required>
+    <br>
+    <input type='text' placeholder="Nome" name="first_name" required>
+    <br>
+    <input type='text' placeholder="Sobrenome" name="last_name" required>
+    <br>
+    <input type='password' placeholder="Senha" name="senha" required>
+    <br>
+    <!-- Exibe o campo de seleção de tipo de usuário apenas para administradores -->
+    {% if is_admin_user %}
+        <select name="tipo" id="tipo" required>
+            {% for tipo in tipos %}
+                <option value="{{ tipo.tipo }}">{{ tipo.tipo }}</option>
+            {% endfor %}  
+        </select>
+    {% else %}
+        <!-- Para usuários não logados, define o tipo como 'user' -->
+        <input type="hidden"  name="tipo" value="user">
+        
+    {% endif %}
+
+    <br>
+    
+    <input class="btn btn-success" type='submit' value="Cadastrar">
+    <a  class="btn btn-warning" href="{% url 'login' %}"role="button">Voltar</a>
+</form>
+<br>
+{% endblock %}
