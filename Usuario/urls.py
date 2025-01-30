@@ -25,9 +25,8 @@ urlpatterns = [
     path("auth/", include("Usuario_django.urls")),
     path("documentos/", include("Documentos.urls")),
     path("",views.home, name="home"),
-    path("super_user/",views.super_user, name="super_user"),
-    path("administrador/",views.admin, name="admin"),
-    
+    #path("super_user/",views.super_user, name="super_user"),
+    #path("administrador/",views.admin, name="admin"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
