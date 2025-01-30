@@ -28,7 +28,7 @@ SECRET_KEY = SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','192.168.0.197','177.153.62.207']
+ALLOWED_HOSTS = ['127.0.0.1','192.168.0.197','177.153.62.207','prontuario-cloud.com.br',]
 
 
 # Application definition
