@@ -12,11 +12,11 @@ import os
 @is_user
 def listar_documentos(request):
     # Lista os documentos do usuário logado
-    documentos_proprios = Documento.objects.filter(proprietario=request.user.usuario).order_by("data_documento")
+    documentos_proprios = Documento.objects.filter(proprietario=request.user.usuario).order_by("-data_documento")
 
     # Lista os documentos que o usuário pode ver devido a permissões recebidas
     permissoes = PermissaoDocumento.objects.filter(usuario_permitido=request.user.usuario)
-    documentos_compartilhados = Documento.objects.filter(proprietario__in=permissoes.values('usuario_concedente'),secreto=False).order_by("proprietario",'data_documento')
+    documentos_compartilhados = Documento.objects.filter(proprietario__in=permissoes.values('usuario_concedente'),secreto=False).order_by("proprietario",'-data_documento')
     documentos_compartilhados_usuario={}
     for doc in documentos_compartilhados:
         if doc.proprietario.usuario not in documentos_compartilhados_usuario:
