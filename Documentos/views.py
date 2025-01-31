@@ -38,8 +38,13 @@ def criar_documento(request):
         arquivo= request.FILES.get("arquivo")
         data=request.POST.get("data_documento")
         secreto=(request.POST.get("secreto")=="on")
+        if arquivo:
+            tamanho_maximo = 5 * 1024 * 1024  # 5 MB em bytes
+            if arquivo.size > tamanho_maximo:
+                messages.error(request, 'O arquivo não pode ser maior que 5 MB.')
+                return render(request, 'criar.html')
+                
         documento = Documento(proprietario=request.user.usuario,titulo=titulo,secreto=secreto, resumo=resumo, arquivo=arquivo,data_documento=data)
-        
         documento.save()
         messages.success(request, 'Documento criado com sucesso!')
         return redirect('listar_documentos')
@@ -63,12 +68,17 @@ def editar_documento(request, documento_id):
         documento.titulo=titulo
         documento.resumo=resumo
         if arquivo:
+            tamanho_maximo = 5 * 1024 * 1024  # 5 MB em bytes
+            if arquivo.size > tamanho_maximo:
+                messages.error(request, 'O arquivo não pode ser maior que 5 MB.')
+                return render(request, 'criar.html')
             caminho_arquivo=os.path.join(settings.PROTECTED_MEDIA_ROOT,'media', str(documento.arquivo))
             try:
                 os.remove(caminho_arquivo)
                 documento.arquivo = arquivo
             except:
-                pass
+                messages.error(request, 'O arquivo não pode ser Apagado do servidor, consulte o administrador.')
+                return redirect('listar_documentos')
         documento.data_documento=data
         documento.secreto=secreto
         documento.save()

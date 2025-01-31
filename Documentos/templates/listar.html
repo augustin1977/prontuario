@@ -31,7 +31,7 @@
                 {% endif %}
             </td>
             <td style="padding: 8px;">
-                {{ documento.data_documento }}
+                {{ documento.data_documento|date:"d \d\e F \d\e Y" }}
             </td>
             <td style="padding: 8px;">
                 <a href="{% url 'editar_documento' documento.id %}">Editar</a> |
@@ -61,7 +61,7 @@
                         <a href="{% url 'detalhes_documento' documento.id %}"><strong>{{ documento.titulo }}</strong></a>
                     </td>
                     <td style="padding: 8px;">
-                        {{ documento.data_documento }}
+                        {{ documento.data_documento|date:"d \d\e F \d\e Y" }}
                     </td>
                 </tr>
                 {% endfor %}
