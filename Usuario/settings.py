@@ -27,11 +27,17 @@ SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+
 # Tempo de expiração da sessão em segundos (4 horas = 4 * 60 * 60 segundos)
 SESSION_COOKIE_AGE = 4 * 60 * 60  # 14400 segundos (4 horas)
 
 # Renovar a sessão a cada requisição (opcional)
 SESSION_SAVE_EVERY_REQUEST = True
+
+# Expirar a sessão quando o navegador for fechado
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Ou 'django.contrib.sessions.backends.cache'
 
 ALLOWED_HOSTS = ['127.0.0.1','192.168.0.197','177.153.62.207','prontuario-cloud.com.br',]
 
