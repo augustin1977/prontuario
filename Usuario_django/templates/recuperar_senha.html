@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block 'titulo' %}
+   Esqueceu a senha?
+{% endblock %}
+{% block 'menu' %}
+{% include 'menu.html' %}
+{% endblock %}
+{% block 'conteudo' %} 
+<h2>Esqueceu a senha ?</h2>
+        <form action = {% url 'esqueceu_senha' %} method="POST"> {% csrf_token %}
+            
+            <input type='text' placeholder="CPF" name="cpf">
+            <br>
+            <input class="btn btn-success" type='submit' value="Enviar">
+        </form>
+
+        {% endblock %}
+

@@ -5,9 +5,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User
+from hashlib import sha256
 from .models import *
 from autenticacao import *
-from auxiliares import validar_cpf
+from auxiliares import *
 
 
 @is_user
@@ -19,6 +20,31 @@ def logout(request):
 def home(request):
     return render(request,"home.html")
 
+@is_user
+def alterar_senha(request):
+    if request.method=="GET":
+        return render(request,"alterar_senha.html")
+    elif request.method=="POST":
+       usuario_logado=request.user
+       cpf=Usuario.objects.filter(usuario=usuario_logado).first().cpf
+       senha_atual=request.POST.get("senha_atual")
+       senha_nova1=request.POST.get("senha_nova1")
+       senha_nova2=request.POST.get("senha_nova2")
+       if senha_nova1==senha_nova2:
+           user = authenticate(request, username=cpf, password=senha_atual) 
+           print(user)
+           if user is not None:
+            user.set_password(senha_nova1)
+            user.save()
+            django_logout(request)
+            return redirect("login")
+       else:
+           messages.warning(request,"Senha não são iguais, tente novamente!")
+           return render(request,"alterar_senha.html") 
+       messages.warning(request,"Senha atual incorreta, tente novamente")
+       return render(request,"alterar_senha.html")   
+    
+
 def login(request):
     if request.method=="GET":
         return render(request,"login.html")
@@ -29,6 +55,7 @@ def login(request):
         if user is not None:
             django_login(request, user)
             return render(request,"home.html")
+    messages.error(request, 'Usuario ou senha não conferem')
     return redirect("login")
 
 def cadastro(request):
@@ -78,11 +105,36 @@ def cadastro(request):
         return render(request,"login.html")
     else:
         return render(request,"login.html")
-
-@is_super_user
-def super_user(request):
-    return render(request,"super_user.html")
-
-@is_admin
-def admin(request):
-    return render(request,"administrador.html")
+def esqueceu_senha(request):
+    if request.method=="GET":
+        return render(request,"recuperar_senha.html")
+    elif request.method=="POST":
+        cpf=''.join(filter(str.isdigit, request.POST.get("cpf")))
+        usuario = Usuario.objects.filter(cpf=cpf).first()
+        nova_senha=gera_senha(15) 
+        if not usuario:
+            messages.error(request, 'Usuário já existe')
+            return render(request,"recuperar_senha.html")
+        body=f"""<html>
+                <head></head>
+                <body>
+                    <h2>Olá {usuario.usuario.first_name}!</h2>
+                    <p>Sua senha foi redefinida com sucesso.</p>
+                    <p>Os dados para login são:</p>
+                    <p>Seu nome de usuário: {usuario.cpf}</p>
+                    <p>Sua senha provisória: {nova_senha}</p>
+                    <p>O link para acesso ao sistema é: <a href="http://protuario-cloud.com.br"> protuario-cloud.com.br </p>
+                    <p>Obrigado!</p>
+                    <p> Administrador do Sistema</p>
+                </body>
+                </html>"""
+        try:
+            retorno=enviar_email_background(subject="Recuperação de Senha",body=body,recipients=[usuario.usuario.email,"protuariocloud@gmail.com"])
+            messages.warning(request,str(retorno))
+            usuario.usuario.set_password(nova_senha)
+            usuario.usuario.save()
+            usuario.save()
+            return render(request,"login.html")
+        except Exception as e:
+            messages.error(request, 'Erro ao recuperar senha, favor entrar em contato com o administrador'+str(e))
+    return render(request,"recuperar_senha.html")

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block 'titulo' %}
+   Trocar Senha
+{% endblock %}
+{% block 'menu' %}
+{% include 'menu.html' %}
+{% endblock %}
+{% block 'conteudo' %} 
+<h2>Troca Senha</h2>
+        <form action = {% url 'alterar_senha' %} method="POST"> {% csrf_token %}
+            
+            <input type='password' placeholder="Digite a Senha atual" name="senha_atual">
+            <br>
+            <input type='password' placeholder="Digite a Nova senha" name="senha_nova1">
+            <br>
+            <input type='password' placeholder="Digite novamente a Nova senha" name="senha_nova2">
+            <br>
+            <input class="btn btn-success" type='submit' value="Enviar">
+        </form>
+
+        {% endblock %}
+

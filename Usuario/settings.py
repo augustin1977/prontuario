@@ -134,3 +134,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_HOST=EMAIL_HOST
+EMAIL_HOST_USER=EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD=SENHA_APP
+EMAIL_PORT=EMAIL_PORT
+EMAIL_USE_TLS=EMAIL_USE_TLS
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
