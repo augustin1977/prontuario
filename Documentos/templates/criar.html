@@ -6,45 +6,50 @@
 {% include 'menu.html' %}
 {% endblock %}
 {% block 'conteudo' %} 
-    <h1>Cadastrar Novo Documento</h1>
+    <div class="container">
+        <h1 class="mt-4">Cadastrar Novo Documento</h1>
 
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+        {% if messages %}
+            <div class="alert alert-warning" role="alert">
+                <ul class="mb-0">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        
-        <div>
-            <label for="titulo">Título:</label>
-            <input type="text" id="titulo" name="titulo" required>
-        </div>
+        <form method="post" enctype="multipart/form-data" class="mt-4">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" placeholder="Titulo" class="form-control form-control-sm" id="titulo" name="titulo" required>
+            </div>
 
-        <div>
-            <label for="resumo">Resumo:</label>
-            <textarea id="resumo" name="resumo" rows="4"></textarea>
-        </div>
+            <div class="form-group">
+                <label for="resumo">Resumo:</label>
+                <textarea class="form-control form-control-sm" placeholder="Resumo" id="resumo" name="resumo" rows="4"></textarea>
+            </div>
 
-        <div>
-            <label for="data_documento">Data do Documento:</label>
-            <input type="date" id="data_documento" name="data_documento" required>
-        </div>
+            <div class="form-group">
+                <label for="data_documento">Data do Documento:</label>
+                <input type="date" class="form-control form-control-sm" id="data_documento" name="data_documento" required>
+            </div>
 
-        <div>
-            <label for="arquivo">Arquivo:</label>
-            <input type="file" id="arquivo" name="arquivo">
-        </div>
-        <div>
-            <label for="secreto">Arquivo privado?:</label>
-            <input type="checkbox" id="secreto" name="secreto">
-        </div>
+            <div class="form-group">
+                <label for="arquivo">Arquivo:</label>
+                <input type="file" class="form-control-file form-control-sm" id="arquivo" name="arquivo">
+            </div>
 
-        <div>
-            <button type="submit">Criar Documento</button>
-        </div>
-    </form>
-    {% endblock %}
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="secreto" name="secreto">
+                <label class="form-check-label form-control-sm"  for="secreto">Arquivo privado?</label>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-sm">Criar Documento</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

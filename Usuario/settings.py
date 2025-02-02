@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Tempo de expiração da sessão em segundos (4 horas = 4 * 60 * 60 segundos)
 SESSION_COOKIE_AGE = 4 * 60 * 60  # 14400 segundos (4 horas)

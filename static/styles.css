@@ -1,11 +1,10 @@
-/* Adiciona padding no body para garantir que o conteúdo não vá para fora da tela */
+
 body {
-    padding-top: 40px; /* Altura da navbar fixa */
+    padding-top: 20px; /* Altura da navbar fixa */
     margin: 0;
     overflow-x: hidden; /* Evita rolagem horizontal indesejada */
 }
 
-/* Ajusta o comportamento da navbar para dispositivos móveis */
 .navbar {
     padding: 0.5rem 1rem;
     flex-wrap: wrap;
@@ -35,6 +34,14 @@ body {
 
 /* Ajustes específicos para dispositivos móveis */
 @media (max-width: 768px) {
+    .form-control {
+        font-size: 0.8rem; /* Reduz ainda mais o tamanho da fonte em telas pequenas */
+        padding: 0.4rem; /* Reduz o padding em telas pequenas */
+    }
+    .btn {
+        font-size: 0.8rem; /* Reduz o tamanho da fonte do botão em telas pequenas */
+        padding: 0.4rem 0.8rem; /* Reduz o padding do botão em telas pequenas */
+    }
     .watermark {
         height: 40%; /* Ajuste a altura da marca d'água em dispositivos móveis */
         background-size: 100% auto; /* Ajusta o tamanho da imagem para manter a proporção */
@@ -46,7 +53,7 @@ body {
         padding-top: 15px;
     }
     .container {
-        padding-top: 20px;
+        padding-top: 40px;
     }
     .input-group {
         flex-direction: column;
@@ -74,24 +81,48 @@ body {
     color: rgb(100, 200, 80);
     font-weight: bold;
 }
-@media (max-width: 530px) {
+@media (max-width: 660px) {
     body {
-        padding-top: 100px; /* Ajusta o padding para dispositivos móveis */
+        padding-top: 60px; /* Ajusta o padding para dispositivos móveis */
     }
 
     .container {
         padding-top: 10px;
     }
 }
-@media (max-width: 380px) {
+@media (max-width: 480px) {
     body {
-        padding-top: 150px; /* Ajusta o padding para dispositivos móveis */
+        padding-top: 60px; /* Ajusta o padding para dispositivos móveis */
     }
     .container {
-        padding-top: 10px;
+        padding-top: 20px;
+    }
+    .navbar .nav-link {
+        font-size: 0.8rem; /* Reduz o tamanho da fonte */
+        padding: 0.25rem 0.5rem; /* Reduz o padding para economizar espaço */
     }
 }
+@media (max-width: 420px) {
+    body {
+        padding-top: 120px; /* Ajusta o padding para dispositivos móveis */
+    }
+    .container {
+        padding-top: 20px;
+    }
+    .navbar .nav-link {
+        font-size: 0.8rem; /* Reduz o tamanho da fonte */
+        padding: 0.25rem 0.5rem; /* Reduz o padding para economizar espaço */
+    }
 
+    .navbar {
+        padding: 0.25rem 0.5rem; /* Reduz o padding da navbar */
+    }
+}
+@media (max-width: 300px) {
+    html {
+        font-size: 75%; /* Reduz o tamanho da fonte base em 25% */
+    }
+}
 .watermark {
     position: fixed;
     top: 20%;
@@ -126,4 +157,21 @@ tr:hover {
     background-color: #f9f9f9; /* Destaca a linha ao passar o mouse */
 }
 
+/* Reduz o tamanho dos campos do formulário */
+.form-control {
+    font-size: 0.9rem; /* Reduz o tamanho da fonte */
+    padding: 0.5rem; /* Reduz o padding */
+    margin-bottom: 0.75rem; /* Ajusta a margem inferior */
+}
+
+/* Reduz o tamanho do botão */
+.btn {
+    font-size: 0.9rem; /* Reduz o tamanho da fonte */
+    padding: 0.5rem 1rem; /* Reduz o padding */
+}
+
+/* Ajusta o textarea */
+textarea.form-control {
+    min-height: 100px; /* Define uma altura mínima menor para o textarea */
+}
 

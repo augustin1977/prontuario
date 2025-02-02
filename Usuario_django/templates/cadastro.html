@@ -15,19 +15,19 @@
 <h2>Cadastro de Usuário</h2>
 <form action="{% url 'cadastro' %}" method="POST"> 
     {% csrf_token %}
-    <input type='text' placeholder="CPF" name="cpf" required>
+    <input type='text' class="form-control form-control-lg" placeholder="CPF" name="cpf" required>
     <br>
-    <input type='email' placeholder="Email" name="email" required>
+    <input type='email' class="form-control form-control-lg" placeholder="Email" name="email" required>
     <br>
-    <input type='text' placeholder="Nome" name="first_name" required>
+    <input type='text' class="form-control form-control-lg" placeholder="Nome" name="first_name" required>
     <br>
-    <input type='text' placeholder="Sobrenome" name="last_name" required>
+    <input type='text' class="form-control form-control-lg" placeholder="Sobrenome" name="last_name" required>
     <br>
-    <input type='password' placeholder="Senha" name="senha" required>
+    <input type='password' class="form-control form-control-lg" placeholder="Senha" name="senha" required>
     <br>
     <!-- Exibe o campo de seleção de tipo de usuário apenas para administradores -->
     {% if is_admin_user %}
-        <select name="tipo" id="tipo" required>
+        <select class="form-control form-control-lg" name="tipo" id="tipo" required>
             {% for tipo in tipos %}
                 <option value="{{ tipo.tipo }}">{{ tipo.tipo }}</option>
             {% endfor %}  
