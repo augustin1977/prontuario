@@ -74,7 +74,8 @@ def editar_documento(request, documento_id):
                 return render(request, 'criar.html')
             caminho_arquivo=os.path.join(settings.PROTECTED_MEDIA_ROOT,'media', str(documento.arquivo))
             try:
-                os.remove(caminho_arquivo)
+                if documento.arquivo:
+                    os.remove(caminho_arquivo)
                 documento.arquivo = arquivo
             except:
                 messages.error(request, 'O arquivo não pode ser Apagado do servidor, consulte o administrador.')
@@ -102,15 +103,17 @@ def excluir_documento(request, documento_id):
     if not documento.pode_excluir(request.user.usuario):
         messages.error(request, 'Você não tem permissão para excluir este documento.')
         return redirect('listar_documentos')
-
+    
     try:
         caminho_arquivo = os.path.join(settings.PROTECTED_MEDIA_ROOT,'media', str(documento.arquivo))
-        os.remove(caminho_arquivo)
+        if documento.arquivo:
+            os.remove(caminho_arquivo)
         documento.delete() 
         messages.success(request, 'Documento excluído com sucesso!')
         return redirect('listar_documentos')
     except Exception as e:
         messages.error(request, f'Erro ao excluir documento - {e}<br>{caminho_arquivo} - - {documento.arquivo}')
+
     return redirect('listar_documentos')
 
 
