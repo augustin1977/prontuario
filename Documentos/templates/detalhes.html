@@ -20,6 +20,6 @@
     {% endif %}
     <p><strong>Arquivo privado?:</strong> {{ documento.secreto }}</p>
         </form>
-    <a href="{% url 'listar_documentos' %}"class="btn btn-primary btn-sm">Voltar</a>
+    <a href="{% url 'listar_documentos' %}"class="btn btn-primary">Voltar</a>
     <a href="{% url 'editar_documento' documento.id %}" class="btn btn-danger">Editar</a>
     {% endblock %}
