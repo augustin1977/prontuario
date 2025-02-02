@@ -3,6 +3,7 @@ body {
     padding-top: 5px; /* Altura da navbar fixa */
     margin: 0;
     overflow-x: hidden; /* Evita rolagem horizontal indesejada */
+    padding-bottom: 30px; /* Ajuste conforme a altura do rodapé */
 }
 
 .navbar {
@@ -28,7 +29,7 @@ body {
 .table-responsive {
     overflow-x: auto; /* Permite rolagem horizontal se necessário */
     -webkit-overflow-scrolling: touch; /* Melhora a rolagem em dispositivos touch */
-    max-height: 100vh; /* Limita a altura máxima da tabela à altura da tela */
+    max-height: 1000vh; /* Limita a altura máxima da tabela à altura da tela */
     overflow-y: auto; /* Permite rolagem vertical se a tabela for muito alta */
 }
 
@@ -180,4 +181,19 @@ tr:hover {
 textarea.form-control {
     min-height: 100px; /* Define uma altura mínima menor para o textarea */
 }
+.table-container {
+    max-height: 95vh; /* Limita a altura a 95% da altura da tela */
+    overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo for maior */
+    margin-bottom: 20px; /* Espaço abaixo da tabela (opcional) */
+}
 
+/* Estilo para o rodapé */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa; /* Cor de fundo do rodapé */
+    padding: 10px;
+    text-align: center;
+    z-index: 1000; /* Garante que o rodapé fique acima de outros elementos */
+}
