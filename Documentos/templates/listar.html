@@ -34,8 +34,8 @@
                 {{ documento.data_documento|date:"d \d\e F \d\e Y" }}
             </td>
             <td style="padding: 8px;">
-                <a href="{% url 'editar_documento' documento.id %}">Editar</a> |
-                <a href="{% url 'excluir_documento' documento.id %}">Excluir</a>
+                <a href="{% url 'editar_documento' documento.id %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'excluir_documento' documento.id %}"class="btn btn-danger btn-sm">Excluir</a>
             </td>
         </tr>
         {% endfor %}

@@ -1,6 +1,6 @@
 
 body {
-    padding-top: 20px; /* Altura da navbar fixa */
+    padding-top: 5px; /* Altura da navbar fixa */
     margin: 0;
     overflow-x: hidden; /* Evita rolagem horizontal indesejada */
 }
@@ -104,7 +104,7 @@ body {
 }
 @media (max-width: 420px) {
     body {
-        padding-top: 120px; /* Ajusta o padding para dispositivos móveis */
+        padding-top: 40px; /* Ajusta o padding para dispositivos móveis */
     }
     .container {
         padding-top: 20px;
@@ -121,6 +121,12 @@ body {
 @media (max-width: 300px) {
     html {
         font-size: 75%; /* Reduz o tamanho da fonte base em 25% */
+    }
+    h1 {
+        font-size: 120%; 
+    }
+    body {
+        padding-top: 40px; /* Ajusta o padding para dispositivos móveis */
     }
 }
 .watermark {
