@@ -41,7 +41,7 @@
                 <label for="arquivo">Arquivo:</label>
                 <input type="file" class="form-control-file" id="arquivo" name="arquivo">
                 {% if documento.arquivo %}
-                    <p class="mt-2">Arquivo atual: <a  href="{{ documento.arquivo.url }}" target="_blank">Baixar</a></p>
+                    <p class="mt-2">Arquivo atual:<a href="{% url 'servir_arquivo_protegido' documento.id %}" >Baixar Arquivo</a></p>
                 {% endif %}
             </div>
 
