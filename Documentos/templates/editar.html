@@ -6,55 +6,58 @@
 {% include 'menu.html' %}
 {% endblock %}
 {% block 'conteudo' %} 
-    <h1>Editar Documento</h1>
+    <div class="container">
+        <h1 class="mt-4">Editar Documento</h1>
 
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+        {% if messages %}
+            <div class="alert alert-warning" role="alert">
+                <ul class="mb-0">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        
-        <div>
-            <label for="titulo">Título:</label>
-            <input type="text" id="titulo" name="titulo" value="{{ documento.titulo }}" required>
-        </div>
+        <form method="post" enctype="multipart/form-data" class="mt-4">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" value="{{ documento.titulo }}" required>
+            </div>
 
-        <div>
-            <label for="resumo">Resumo:</label>
-            <textarea id="resumo" name="resumo" rows="4">{{ documento.resumo }}</textarea>
-        </div>
+            <div class="form-group">
+                <label for="resumo">Resumo:</label>
+                <textarea class="form-control" id="resumo" name="resumo" rows="4">{{ documento.resumo }}</textarea>
+            </div>
 
-        <div>
-            <label for="data_documento">Data do Documento:</label>
-            <input type="date" id="data_documento" name="data_documento" value="{{ documento.data_documento|date:'Y-m-d' }}" required>
-        </div>
+            <div class="form-group">
+                <label for="data_documento">Data do Documento:</label>
+                <input type="date" class="form-control" id="data_documento" name="data_documento" value="{{ documento.data_documento|date:'Y-m-d' }}" required>
+            </div>
 
-        <div>
-            <label for="arquivo">Arquivo:</label>
-            <input type="file" id="arquivo" name="arquivo">
-            {% if documento.arquivo %}
-                <p>Arquivo atual: <a href="{{ documento.arquivo.url }}" target="_blank">Baixar</a></p>
-            {% endif %}
-        </div>
+            <div class="form-group">
+                <label for="arquivo">Arquivo:</label>
+                <input type="file" class="form-control-file" id="arquivo" name="arquivo">
+                {% if documento.arquivo %}
+                    <p class="mt-2">Arquivo atual: <a href="{{ documento.arquivo.url }}" target="_blank">Baixar</a></p>
+                {% endif %}
+            </div>
 
-        <div>
-            <label for="secreto">Arquivo privado?:</label>
-            {% if documento.secreto%}
-            <input type="checkbox" id="secreto" name="secreto" checked>
-            {% else %}
-            <input type="checkbox" id="secreto" name="secreto">
-            {% endif %}
-        </div>
+            <div class="form-group form-check">
+                {% if documento.secreto %}
+                    <input type="checkbox" class="form-check-input" id="secreto" name="secreto" checked>
+                {% else %}
+                    <input type="checkbox" class="form-check-input" id="secreto" name="secreto">
+                {% endif %}
+                <label class="form-check-label" for="secreto">Arquivo privado?</label>
+            </div>
 
-        <div>
-            <button type="submit">Salvar Alterações</button>
-        </div>
-    </form>
-
-    <a href="{% url 'listar_documentos' %}">Voltar</a>
-    {% endblock  %} 
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                <a href="{% url 'listar_documentos' %}" class="btn btn-secondary ml-2">Voltar</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
