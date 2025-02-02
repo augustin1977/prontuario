@@ -110,8 +110,7 @@ def excluir_documento(request, documento_id):
         messages.success(request, 'Documento excluído com sucesso!')
         return redirect('listar_documentos')
     except Exception as e:
-        print(e)
-        messages.error(request, f'Erro ao excluir documento{e}')
+        messages.error(request, f'Erro ao excluir documento - {e}<br>{caminho_arquivo} - - {documento.arquivo}')
     return redirect('listar_documentos')
 
 
