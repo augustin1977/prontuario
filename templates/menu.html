@@ -2,7 +2,16 @@
 <a class="nav-link text-light" href="{% url 'criar_documento' %}">Cadastrar_documentos</a>
 <a class="nav-link text-light" href="{% url 'conceder_permissao' %}">Conceder_Permissão</a>
 <a class="nav-link text-light" href="{% url 'visualizar_permissoes' %}">Revisar_Permissões</a>
-<a class="nav-link text-light" href="{% url 'cadastro' %}">Cadastrar_novo_Usuario</a>
+<li class="navbar navbar-dark bg-dark nav-item dropdown ">
+    <a class="navbar-link text-light dropdown-toggle "  href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Administrar_Usuarios
+    </a>
+    <div class="dropdown-menu text-light bg-dark" aria-labelledby="navbarDropdown">
+      <a class="navbar-link bg-dark dropdown-item text-light" href="{% url 'listar_usuarios' %}">Listar_usuarios</a>
+      <a class="navbar-link bg-dark dropdown-item text-light" href="{% url 'cadastro' %}">Cadastrar_novo_Usuario</a>
+    </div>
+  </li>
+
 <a class="nav-link text-light" href="{% url 'alterar_senha' %}">alterar_senha</a>
 
 

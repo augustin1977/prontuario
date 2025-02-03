@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block 'titulo' %}
+   Listar Usuarios
+{% endblock %}
+{% block 'menu' %}
+{% include 'menu.html' %}
+{% endblock %}
+{% block 'conteudo' %} 
+
+<h1>Listar Usuarios</h1>
+<table style="width: 100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th style="text-align: left; padding: 8px; width: 50%;">Nome</th>
+            <th style="text-align: left; padding: 8px;">CPF</th>
+            <th style="text-align: left; padding: 8px;">Tipo</th>
+            <th style="text-align: left; padding: 8px;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+            <td style="padding: 8px;">
+                <strong>{{ usuario.usuario.first_name }} {{ usuario.usuario.last_name }}</strong></a>
+            </td>
+            <td style="padding: 8px;">
+                {{usuario.cpf }}
+            </td>
+            <td style="padding: 8px;">
+                {{ usuario.tipo }}
+            </td>
+            <td style="padding: 8px;">
+            <a href="{% url 'excluir_usuario' usuario.usuario.id %}"class="btn btn-danger btn-sm">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+   
+    </div>
+
+{% endblock %}

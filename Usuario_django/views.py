@@ -44,6 +44,18 @@ def alterar_senha(request):
        messages.warning(request,"Senha atual incorreta, tente novamente")
        return render(request,"alterar_senha.html")   
     
+@is_admin
+def listar_usuarios(request):
+    if request.method=="GET":
+        usuarios=Usuario.objects.all()
+        return render(request,"listar_usuarios.html",{'usuarios':usuarios})
+    messages.error(request, 'Erro ao acessar lista de usuários')
+    return render(request,"login.html")
+@is_admin
+def excluir_usuario(request,usuario_id):
+    messages.error(request, 'Função não implementada')
+    usuarios=Usuario.objects.all()
+    return render(request,"listar_usuarios.html",{'usuarios':usuarios})
 
 def login(request):
     if request.method=="GET":
