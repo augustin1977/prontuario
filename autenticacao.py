@@ -12,7 +12,7 @@ def is_user(view_func):
         except:
             usuario=False
         if usuario:
-            if usuario.is_authenticated:
+            if usuario.is_authenticated and Usuario.objects.filter(usuario=usuario).first():
                 return view_func(request, *args, **kwargs)
             else:
                 return redirect('login')
@@ -26,7 +26,7 @@ def is_super_user(view_func):
         except:
             user=False
         if user:
-            if user.is_authenticated:
+            if user.is_authenticated and Usuario.objects.filter(usuario=user).first():
                 usuario= Usuario.objects.filter(usuario=user).first()
                 filter= Q(tipo="super_user")|Q(tipo="admin")
                 tipo= Tipo_usuario.objects.filter(filter)

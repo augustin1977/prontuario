@@ -59,11 +59,13 @@ def login(request):
     return redirect("login")
 
 def cadastro(request):
-    is_admin_user = request.user.is_authenticated and request.user.usuario.tipo.tipo == 'admin'
-    lista_tipos_usuarios={}
     
+    is_admin_user = request.user.is_authenticated and is_user(request.user)
+    lista_tipos_usuarios={}
+
     
     if request.method=="GET":
+  
         if is_admin_user: 
             lista_tipos_usuarios={"tipos":list(Tipo_usuario.objects.all())}
         else:
