@@ -3,6 +3,7 @@ from Usuario_django.models import *
 from django.contrib.auth import authenticate
 from django.shortcuts import render,redirect
 from django.db.models import Q
+from django.contrib import messages
 
 
 def is_user(view_func):
@@ -15,8 +16,10 @@ def is_user(view_func):
             if usuario.is_authenticated and Usuario.objects.filter(usuario=usuario).first():
                 return view_func(request, *args, **kwargs)
             else:
+                messages.error(request, 'Acesso negado')
                 return redirect('login')
         else:
+            messages.error(request, 'Acesso negado')
             return redirect('login')  # Redireciona para uma página de login ou qualquer outra página apropriada
     return wrapper
 def is_super_user(view_func):
@@ -33,10 +36,13 @@ def is_super_user(view_func):
                 if usuario.tipo in tipo:
                     return view_func(request, *args, **kwargs)
                 else:
+                    messages.error(request, 'Acesso negado')
                     return redirect('login')
             else:
+                messages.error(request, 'Acesso negado')
                 return redirect('login')
         else:
+            messages.error(request, 'Acesso negado')
             return redirect('login')  # Redireciona para uma página de login ou qualquer outra página apropriada
     return wrapper
 
@@ -53,9 +59,12 @@ def is_admin(view_func):
                 if usuario.tipo==tipo:
                     return view_func(request, *args, **kwargs)
                 else:
-                    return redirect('login')
+                    messages.error(request, 'Acesso negado')
+                    return redirect('home')
             else:
-                return redirect('login')
+                messages.error(request, 'Acesso negado')
+                return redirect('home')
         else:
+            messages.error(request, 'Acesso negado')
             return redirect('login')  # Redireciona para uma página de login ou qualquer outra página apropriada
     return wrapper

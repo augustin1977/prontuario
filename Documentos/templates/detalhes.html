@@ -14,7 +14,7 @@
     <p><strong>Última Modificação:</strong> {{ documento.data_modificacao|date:"d/m/Y H:i" }}</p>
 
     {% if documento.arquivo %}
-        <p><strong>Arquivo:</strong> <a href="{% url 'servir_arquivo_protegido' documento.id %}" >Baixar Arquivo</a></p>
+        <p><strong>Arquivo:</strong> <a href="{% url 'servir_arquivo_protegido' documento.id %}" target="_blank"> Baixar Arquivo</a></p>
     {% else %}
         <p><strong>Arquivo:</strong> Nenhum arquivo anexado.</p>
     {% endif %}

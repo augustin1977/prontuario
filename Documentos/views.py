@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import FileResponse, Http404
+from django.http import FileResponse, Http404,HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.conf import settings
@@ -165,7 +165,7 @@ def excluir_permissao(request, permissao_id):
 def servir_arquivo_protegido(request, documento_id):
     # Obtém o documento
     documento = Documento.objects.filter(id=documento_id).first()
-    print(documento,documento.arquivo)
+    # print(documento,documento.arquivo)
     if not documento:
         raise Http404("Documento não encontrado.")
 
@@ -175,9 +175,27 @@ def servir_arquivo_protegido(request, documento_id):
 
     # Caminho absoluto do arquivo
     caminho_arquivo = os.path.join(settings.PROTECTED_MEDIA_ROOT,'media', str(documento.arquivo))
-    print(caminho_arquivo)
+    # print(caminho_arquivo)
+    
     if not os.path.exists(caminho_arquivo):
         raise Http404("Arquivo não encontrado.")
     
     # Servir o arquivo como resposta
+    with open(caminho_arquivo, "rb") as arquivo:
+        figuras = ["jpg", "jpeg", "bmp", "gif", "svg", "png"]
+        ext = str(documento.arquivo).split(".")[-1].lower()
+        
+        if ext in figuras:
+            content_type = f'image/{ext if ext != "jpg" else "jpeg"}'  # Exceção para 'jpg' que deve ser 'jpeg'
+            response = HttpResponse(arquivo.read(), content_type=content_type)
+        else:
+            response = HttpResponse(
+                arquivo.read(), content_type="application/octet-stream"
+            )
+            filename = str(documento.arquivo).split("/")[-1]
+            response["Content-Disposition"] = f'attachment; filename="{filename}"'
+
+    return response
+    
+    
     return FileResponse(open(caminho_arquivo, 'rb'), as_attachment=True, filename=documento.arquivo.name)
