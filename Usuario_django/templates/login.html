@@ -9,9 +9,9 @@
 <h2>Login</h2>
         <form action = {% url 'login' %} method="POST"> {% csrf_token %}
             
-            <input type='text' placeholder="CPF" name="cpf">
+            <input type='text' class="form-control form-control-lg" placeholder="CPF" name="cpf">
             <br>
-            <input type='password' placeholder="Senha" name="senha">
+            <input type='password' class="form-control form-control-lg" placeholder="Senha" name="senha">
             <br>
             <input class="btn btn-primary" type='submit' value="Entrar">
             <a  class="btn btn-warning" href="{% url 'cadastro' %}"role="button">cadastrar</a>
