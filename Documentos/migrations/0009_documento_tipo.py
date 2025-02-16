@@ -15,7 +15,6 @@ class Migration(migrations.Migration):
             model_name="documento",
             name="tipo",
             field=models.ForeignKey(
-                default=0,
                 on_delete=django.db.models.deletion.CASCADE,
                 to="Documentos.tipo_documento",
             ),
