@@ -41,13 +41,13 @@
                 <label for="arquivo">Arquivo:</label>
                 <input type="file" class="form-control-file form-control-sm" id="arquivo" name="arquivo">
             </div>
-            
+
             <div class="form-group">
                 <label for="tipo">Tipo de Especialidade:</label>
-                <select class="form-control form-control-sm" id="tipo" name="tipo" required>
+                <select class="form-control" id="tipo" name="tipo" required>
                     <option value="">Selecione um tipo</option>
                     {% for tipo in tipos %}
-                        <option value="{{ tipo.id }}">{{ tipo.nome }}</option>
+                        <option value="{{ tipo.id }}">{{ tipo.tipo }}</option>
                     {% endfor %}
                 </select>
             </div>

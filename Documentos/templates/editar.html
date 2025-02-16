@@ -46,10 +46,11 @@
             </div>
             <div class="form-group">
                 <label for="tipo">Tipo de Especialidade:</label>
-                <select class="form-control form-control-sm" id="tipo" name="tipo" required>
+                <select class="form-control " id="tipo" name="tipo" required>
                     <option value="">Selecione um tipo</option>
                     {% for tipo in tipos %}
-                        <option value="{{ tipo.id }}">{{ tipo.nome }}</option>
+                        <option value="{{ tipo.id }}" {% if documento.tipo == tipo %} selected {% endif %} >
+                            {{ tipo.tipo }} </option>
                     {% endfor %}
                 </select>
             </div>

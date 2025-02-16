@@ -17,7 +17,7 @@ def listar_documentos(request):
     for doc in documentos_proprios:
         tipo = doc.tipo.tipo
         if tipo not in documentos_por_tipo:
-            documentos_por_tipo[tipo] = [doc]
+            documentos_por_tipo[tipo] = []
         documentos_por_tipo[tipo].append(doc)
     # Lista os documentos que o usuário pode ver devido a permissões recebidas
 
@@ -26,13 +26,13 @@ def listar_documentos(request):
     documentos_compartilhados_usuario={}
     for doc in documentos_compartilhados:
         if doc.proprietario.usuario not in documentos_compartilhados_usuario:
-            documentos_compartilhados_usuario[doc.proprietario.usuario]=[doc]
+            documentos_compartilhados_usuario[doc.proprietario.usuario]=[]
         else:
             documentos_compartilhados_usuario[doc.proprietario.usuario].append(doc)
     documentos_compartilhados_por_tipo = {}
     for doc in documentos_compartilhados:
         if tipo not in documentos_compartilhados_por_tipo:
-            documentos_compartilhados_por_tipo[tipo] = [doc]
+            documentos_compartilhados_por_tipo[tipo] = []
         documentos_compartilhados_por_tipo[tipo].append(doc)    
     return render(request, 'listar.html', {
         'documentos_proprios': documentos_por_tipo,
@@ -42,7 +42,7 @@ def listar_documentos(request):
 
 @is_user
 def criar_documento(request):
-    tipos = Tipo_documento.objects.all()
+    tipos = Tipo_documento.objects.all().order_by("tipo")
     if request.method == 'POST':
         titulo=request.POST.get('titulo')
         resumo = request.POST.get('resumo')
@@ -68,7 +68,7 @@ def criar_documento(request):
 
 @is_user
 def editar_documento(request, documento_id):
-    tipos = Tipo_documento.objects.all()
+    tipos = Tipo_documento.objects.all().order_by("tipo")
     documento = get_object_or_404(Documento, id=documento_id)
     if not documento.pode_editar(request.user.usuario):
         messages.error(request, 'Você não tem permissão para editar este documento.')
