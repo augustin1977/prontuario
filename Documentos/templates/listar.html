@@ -8,67 +8,76 @@
 {% block 'conteudo' %} 
 
 <h1>Meus Documentos</h1>
-<table style="width: 100%; border-collapse: collapse;">
-    <thead>
-        <tr>
-            <th style="text-align: left; padding: 8px; width: 50%;">Título</th>
-            <th style="text-align: left; padding: 8px;">Privacidade</th>
-            <th style="text-align: left; padding: 8px;">Data do Documento</th>
-            <th style="text-align: left; padding: 8px;">Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for documento in documentos_proprios %}
-        <tr>
-            <td style="padding: 8px;">
-                <a href="{% url 'detalhes_documento' documento.id %}"><strong>{{ documento.titulo }}</strong></a>
-            </td>
-            <td style="padding: 8px;">
-                {% if documento.secreto %}
-                <span class="red">Privado</span>
-                {% else %}
-                <span class="green">Público</span>
-                {% endif %}
-            </td>
-            <td style="padding: 8px;">
-                {{ documento.data_documento|date:"d \d\e F \d\e Y" }}
-            </td>
-            <td style="padding: 8px;">
-                <a href="{% url 'editar_documento' documento.id %}" class="btn btn-warning btn-sm">Editar</a>
-                <a href="{% url 'excluir_documento' documento.id %}"class="btn btn-danger btn-sm">Excluir</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
 
-</table>
+{% for tipo, documentos in documentos_proprios.items %}
+    <h3 style="margin-top: 20px;">{{ tipo }}</h2>  <!-- Nome da Especialidade -->
+
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <thead>
+            <tr>
+                <th style="text-align: left; padding: 8px; width: 50%;">Título</th>
+                <th style="text-align: left; padding: 8px;">Privacidade</th>
+                <th style="text-align: left; padding: 8px;">Data do Documento</th>
+                <th style="text-align: left; padding: 8px;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for documento in documentos %}
+            <tr>
+                <td style="padding: 8px;">
+                    <a href="{% url 'detalhes_documento' documento.id %}"><strong>{{ documento.titulo }}</strong></a>
+                </td>
+                <td style="padding: 8px;">
+                    {% if documento.secreto %}
+                    <span class="red">Privado</span>
+                    {% else %}
+                    <span class="green">Público</span>
+                    {% endif %}
+                </td>
+                <td style="padding: 8px;">
+                    {{ documento.data_documento|date:"d \d\e F \d\e Y" }}
+                </td>
+                <td style="padding: 8px;">
+                    <a href="{% url 'editar_documento' documento.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'excluir_documento' documento.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endfor %}
+
 {% if documentos_compartilhados.items %}
 <h1>Documentos Compartilhados Comigo</h1>
-{% for usuario, documentos in documentos_compartilhados.items %}
-    <div style="margin-bottom: 20px;">
-        <h3>Proprietário - {{ usuario.first_name }} {{ usuario.last_name }}</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-            <thead>
-                <tr>
-                    <th style="text-align: left; padding: 8px;">Título</th>
-                    <th style="text-align: left; padding: 8px;">Data do Documento</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for documento in documentos %}
-                <tr>
-                    <td style="padding: 8px;">
-                        <a href="{% url 'detalhes_documento' documento.id %}"><strong>{{ documento.titulo }}</strong></a>
-                    </td>
-                    <td style="padding: 8px;">
-                        {{ documento.data_documento|date:"d \d\e F \d\e Y" }}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
+
+{% for tipo, documentos in documentos_compartilhados.items %}
+    <h3 style="margin-top: 20px;" >{{ tipo }}</h2>
+
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <thead>
+            <tr>
+                <th style="text-align: left; padding: 8px;">Título</th>
+                <th style="text-align: left; padding: 8px;">Data do Documento</th>
+                <th style="text-align: left; padding: 8px;">Proprietário</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for documento in documentos %}
+            <tr>
+                <td style="padding: 8px;">
+                    <a href="{% url 'detalhes_documento' documento.id %}"><strong>{{ documento.titulo }}</strong></a>
+                </td>
+                <td style="padding: 8px;">
+                    {{ documento.data_documento|date:"d \d\e F \d\e Y" }}
+                </td>
+                <td style="padding: 8px;">
+                    {{ documento.proprietario.first_name }} {{ documento.proprietario.last_name }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-    
-    </div>
 {% endfor %}
 {% endif %}
+
 {% endblock %}

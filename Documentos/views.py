@@ -3,7 +3,7 @@ from django.http import FileResponse, Http404,HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.conf import settings
-from .models import Documento, PermissaoDocumento
+from .models import *
 from Usuario_django.models import Usuario
 from autenticacao import * 
 import os
@@ -13,8 +13,14 @@ import os
 def listar_documentos(request):
     # Lista os documentos do usuário logado
     documentos_proprios = Documento.objects.filter(proprietario=request.user.usuario).order_by("-data_documento")
-
+    documentos_por_tipo = {}
+    for doc in documentos_proprios:
+        tipo = doc.tipo.tipo
+        if tipo not in documentos_por_tipo:
+            documentos_por_tipo[tipo] = [doc]
+        documentos_por_tipo[tipo].append(doc)
     # Lista os documentos que o usuário pode ver devido a permissões recebidas
+
     permissoes = PermissaoDocumento.objects.filter(usuario_permitido=request.user.usuario)
     documentos_compartilhados = Documento.objects.filter(proprietario__in=permissoes.values('usuario_concedente'),secreto=False).order_by("proprietario",'-data_documento')
     documentos_compartilhados_usuario={}
@@ -23,36 +29,46 @@ def listar_documentos(request):
             documentos_compartilhados_usuario[doc.proprietario.usuario]=[doc]
         else:
             documentos_compartilhados_usuario[doc.proprietario.usuario].append(doc)
-        
+    documentos_compartilhados_por_tipo = {}
+    for doc in documentos_compartilhados:
+        if tipo not in documentos_compartilhados_por_tipo:
+            documentos_compartilhados_por_tipo[tipo] = [doc]
+        documentos_compartilhados_por_tipo[tipo].append(doc)    
     return render(request, 'listar.html', {
-        'documentos_proprios': documentos_proprios,
-        'documentos_compartilhados': documentos_compartilhados_usuario,
+        'documentos_proprios': documentos_por_tipo,
+        'documentos_compartilhados': documentos_compartilhados_por_tipo,
     })
 
 
 @is_user
 def criar_documento(request):
+    tipos = Tipo_documento.objects.all()
     if request.method == 'POST':
         titulo=request.POST.get('titulo')
         resumo = request.POST.get('resumo')
         arquivo= request.FILES.get("arquivo")
         data=request.POST.get("data_documento")
         secreto=(request.POST.get("secreto")=="on")
+        tipo_id = request.POST.get("tipo") 
+        tipo = Tipo_documento.objects.filter(id=tipo_id).first()
         if arquivo:
             tamanho_maximo = 5 * 1024 * 1024  # 5 MB em bytes
             if arquivo.size > tamanho_maximo:
                 messages.error(request, 'O arquivo não pode ser maior que 5 MB.')
-                return render(request, 'criar.html')
+                return render(request, 'criar.html', {"tipos": tipos})
                 
-        documento = Documento(proprietario=request.user.usuario,titulo=titulo,secreto=secreto, resumo=resumo, arquivo=arquivo,data_documento=data)
+        documento = Documento(proprietario=request.user.usuario,titulo=titulo,secreto=secreto,
+                              resumo=resumo, arquivo=arquivo,data_documento=data,tipo=tipo)
         documento.save()
         messages.success(request, 'Documento criado com sucesso!')
         return redirect('listar_documentos')
-    return render(request, 'criar.html')
+    
+    return render(request, 'criar.html', {"tipos":tipos})
 
 
 @is_user
 def editar_documento(request, documento_id):
+    tipos = Tipo_documento.objects.all()
     documento = get_object_or_404(Documento, id=documento_id)
     if not documento.pode_editar(request.user.usuario):
         messages.error(request, 'Você não tem permissão para editar este documento.')
@@ -64,14 +80,17 @@ def editar_documento(request, documento_id):
         arquivo= request.FILES.get("arquivo")        
         data=request.POST.get("data_documento")
         secreto=(request.POST.get("secreto")=="on")
+        tipo_id = request.POST.get("tipo") 
+        tipo = Tipo_documento.objects.filter(id=tipo_id).first()
         documento = get_object_or_404(Documento, id=documento_id)
         documento.titulo=titulo
         documento.resumo=resumo
+        documento.tipo=tipo
         if arquivo:
             tamanho_maximo = 5 * 1024 * 1024  # 5 MB em bytes
             if arquivo.size > tamanho_maximo:
                 messages.error(request, 'O arquivo não pode ser maior que 5 MB.')
-                return render(request, 'criar.html')
+                return render(request, 'editar.html', {'documento': documento,"tipos":tipos})
             caminho_arquivo=os.path.join(settings.PROTECTED_MEDIA_ROOT,'media', str(documento.arquivo))
             try:
                 if documento.arquivo:
@@ -85,7 +104,7 @@ def editar_documento(request, documento_id):
         documento.save()
         messages.success(request, 'Documento atualizado com sucesso!')
         return redirect('listar_documentos')
-    return render(request, 'editar.html', {'documento': documento})
+    return render(request, 'editar.html', {'documento': documento,"tipos":tipos})
 
 @is_user
 def detalhes_documento(request, documento_id):

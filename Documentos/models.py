@@ -12,7 +12,11 @@ class PermissaoDocumento(models.Model):
     def __str__(self):
         return f"{self.usuario_concedente.cpf} concedeu permissão a {self.usuario_permitido.cpf}"
 
-
+class Tipo_documento(models.Model):
+    tipo=models.TextField(max_length=255,default=None)
+    def __str__(self):
+        return self.tipo
+    
 class Documento(models.Model):
     proprietario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='documentos_proprietario')
     titulo= models.CharField(max_length=255,blank=False,null=False)
@@ -22,6 +26,7 @@ class Documento(models.Model):
     data_criacao = models.DateTimeField(auto_now_add=True)  # Data de criação do documento
     data_modificacao=models.DateTimeField(auto_now=True)
     secreto=models.BooleanField(blank=False,null=False,default=False)
+    tipo=models.ForeignKey(Tipo_documento, on_delete=models.CASCADE, ) 
 
     def __str__(self):
         return f"Documento de {self.proprietario.cpf}"
