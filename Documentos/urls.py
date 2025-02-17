@@ -11,4 +11,8 @@ urlpatterns = [
     path('permissoes/', views.visualizar_permissoes, name='visualizar_permissoes'),
     path('permissoes/excluir/<int:permissao_id>/', views.excluir_permissao, name='excluir_permissao'),
     path('arquivo/<int:documento_id>/', views.servir_arquivo_protegido, name='servir_arquivo_protegido'),
+    path('cadastrar_especialidade/', views.cadastrar_especialidade, name='cadastrar_especialidade'),
+    path('especilidades/', views.listar_especialidades, name='listar_especialidades'),
+    path('especialidades/excluir/<int:id_tipo>/', views.excluir_especialidades, name='excluir_especialidades'),
+    
 ]

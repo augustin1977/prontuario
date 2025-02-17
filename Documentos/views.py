@@ -218,3 +218,32 @@ def servir_arquivo_protegido(request, documento_id):
     
     
     return FileResponse(open(caminho_arquivo, 'rb'), as_attachment=True, filename=documento.arquivo.name)
+@is_admin
+def cadastrar_especialidade(request):
+    if request.method == 'POST':
+        tipo_cadastrado=request.POST.get('especialidade')
+        
+        tipo = Tipo_documento(tipo=tipo_cadastrado)
+        tipo.save()
+        messages.success(request, 'Documento criado com sucesso!')
+        return redirect('home')
+    else:
+        return render(request, 'criar_tipos.html')
+@is_admin
+def listar_especialidades(request):
+    # Lista os documentos do usuário logado
+    tipos = Tipo_documento.objects.all()
+    return render(request, 'listar_tipos.html', {
+        "tipos":tipos
+    })
+@is_admin
+def excluir_especialidades(request,id_tipo):
+    tipo=get_object_or_404(Tipo_documento,id=id_tipo)
+    # Exclui a permissão
+    documentos=Documento.objects.filter(tipo=tipo)
+    if documentos:
+        messages.error(request,"Especilidade não pode ser excluida pois está em uso!")
+        return redirect('listar_especialidades')
+    tipo.delete()
+    messages.success(request, 'Especialidade excluida com sucesso!')
+    return redirect('listar_especialidades')
