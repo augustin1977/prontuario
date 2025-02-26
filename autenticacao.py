@@ -63,7 +63,7 @@ def is_admin(view_func):
                     return redirect('home')
             else:
                 messages.error(request, 'Acesso negado')
-                return redirect('home')
+                return redirect('login')
         else:
             messages.error(request, 'Acesso negado')
             return redirect('login')  # Redireciona para uma página de login ou qualquer outra página apropriada
