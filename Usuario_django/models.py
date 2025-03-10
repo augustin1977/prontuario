@@ -11,4 +11,4 @@ class Usuario(models.Model):
     cpf=models.CharField(max_length=30,unique=True)
     tipo=models.ForeignKey(Tipo_usuario, on_delete=models.CASCADE)
     def __str__(self):
-        return f"{self.usuario.username} - {self.tipo}"
+        return f"{self.cpf[:3]}.{self.cpf[3:6]}.{self.cpf[6:9]}-{self.cpf[-2:]}"

@@ -29,7 +29,7 @@ class Documento(models.Model):
     tipo=models.ForeignKey(Tipo_documento, on_delete=models.CASCADE, ) 
 
     def __str__(self):
-        return f"Documento de {self.proprietario.cpf}"
+        return f"Documento de {self.proprietario}"
 
     def pode_visualizar(self, usuario):
         """Verifica se um usuário pode visualizar o documento."""

@@ -26,17 +26,15 @@ def listar_documentos(request):
     documentos_compartilhados_usuario={}
     for doc in documentos_compartilhados:
         if doc.proprietario.usuario not in documentos_compartilhados_usuario:
-            documentos_compartilhados_usuario[doc.proprietario.usuario]=[]
-        else:
-            documentos_compartilhados_usuario[doc.proprietario.usuario].append(doc)
-    documentos_compartilhados_por_tipo = {}
-    for doc in documentos_compartilhados:
-        if tipo not in documentos_compartilhados_por_tipo:
-            documentos_compartilhados_por_tipo[tipo] = []
-        documentos_compartilhados_por_tipo[tipo].append(doc)    
+            documentos_compartilhados_usuario[doc.proprietario.usuario]={}
+        tipo = doc.tipo.tipo
+        if tipo not in documentos_compartilhados_usuario[doc.proprietario.usuario]:
+            documentos_compartilhados_usuario[doc.proprietario.usuario][tipo] = []
+        documentos_compartilhados_usuario[doc.proprietario.usuario][tipo].append(doc)    
+    print(documentos_compartilhados_usuario)
     return render(request, 'listar.html', {
         'documentos_proprios': documentos_por_tipo,
-        'documentos_compartilhados': documentos_compartilhados_por_tipo,
+        'documentos_compartilhados': documentos_compartilhados_usuario,
     })
 
 

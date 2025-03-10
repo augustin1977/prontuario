@@ -8,9 +8,9 @@
 {% block 'conteudo' %} 
 
 <h1>Meus Documentos</h1>
-
+{% if documentos_proprios.items %}
 {% for tipo, documentos in documentos_proprios.items %}
-    <h3 style="margin-top: 20px;">{{ tipo }}</h2>  <!-- Nome da Especialidade -->
+    <h4 style="margin-top: 20px;">{{ tipo }}</h4>  <!-- Nome da Especialidade -->
 
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
         <thead>
@@ -46,14 +46,17 @@
         </tbody>
     </table>
 {% endfor %}
+{% endif %}
 
 {% if documentos_compartilhados.items %}
 <h1>Documentos Compartilhados Comigo</h1>
 
-{% for tipo, documentos in documentos_compartilhados.items %}
-    <h3 style="margin-top: 20px;" >{{ tipo }}</h2>
-
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+{% for pessoa, dados in documentos_compartilhados.items %}
+    <h3 class = "green" style="margin-top: 20px;" >{{ pessoa.first_name }} {{ pessoa.last_name }} - {{ pessoa.usuario }}</h3>
+    {% for especialidade,documentos in dados.items %}
+    <h4 style="margin-top: 20px;" >{{ especialidade }}</h4>
+    
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
         <thead>
             <tr>
                 <th style="text-align: left; padding: 8px;">Título</th>
@@ -77,6 +80,7 @@
             {% endfor %}
         </tbody>
     </table>
+{% endfor %}
 {% endfor %}
 {% endif %}
 
